@@ -5,7 +5,7 @@
         <title>Isabella Gilbert | GitHub Portfolio</title>
         <link rel="stylesheet" href="css/style.css">
     </head>
-    <body>
+    <body onresize="adjresumeheight()">
         <div class="headers">
             <h1>Isabella Gilbert</h1>
             <!--<a class="navlink" href="about.html"><h2>About <span class="navlinkicon"> &#128172</span></h2></a>-->
@@ -14,16 +14,22 @@
             <a class="navlink" href="contact.html"><h2>Contact <span class="navlinkicon"> &#128233</span></h2></a>
         </div>
         
-        <div class="pagecontent">
+        <div class="pagecontent" id="pagecontent">
             <hr>
-            <b>In progress</b><br>
-            <a href="https://github.com/jgross11/generic-group-project" target="_blank">Chess</a>
-            <br><br>
-
-            <b>Completed Projects</b><br>
-            <a href="portfolio/snake.html">Snake</a><br>
-            <a href="portfolio/disks-game.html">Disks</a><br>
-            <a href="portfolio/easy-as-pi.html">"Easy as Pi!" Kids' Python Programming Class</a><br>
+            <iframe id="resume" width="100%" src="resume/gilbert-isabella-resume11-21-virtual.pdf"></iframe>
+            <script>
+                function adjresumeheight() {
+                    var element = document.getElementById('pagecontent');
+                    var style = window.getComputedStyle(element);
+                    var width = style.getPropertyValue('width');
+                    width_to_int = width.replace("px","");
+                    var height = (width_to_int*1.3)+"px";
+                    document.getElementById('resume').style.height = height;
+                }
+                adjresumeheight(); 
+            </script>
+            <br>
         </div>
+        
     </body>
 </html>
