@@ -16,14 +16,14 @@
         
         <div class="pagecontent" id="pagecontent">
             <hr>
-            <iframe id="resume" width="100%" src="resume/gilbert-isabella-resume11-21-virtual.pdf"></iframe>
+            <iframe id="resume" width="100%" src="https://docs.google.com/document/d/1FPZvmh70t95ebTcGDUpq5AIDRl6zkmuXOLSJCkN-dfY/edit?usp=sharing#zoom=fitH"></iframe>
             <script>
                 function adjresumeheight() {
                     var element = document.getElementById('pagecontent');
                     var style = window.getComputedStyle(element);
                     var width = style.getPropertyValue('width');
                     width_to_int = width.replace("px","");
-                    var height = (width_to_int*1.3)+"px";
+                    var height = (width_to_int*0.9)+"px";
                     document.getElementById('resume').style.height = height;
                 }
                 adjresumeheight(); 
