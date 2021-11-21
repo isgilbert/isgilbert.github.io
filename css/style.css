@@ -1,7 +1,10 @@
-body {
-    margin-left:200px;
-    margin-right:200px;
+* {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body {
+    margin-left:10vw;
+    margin-right:10vw;
     background-color:#E5E4E2;
 }
 
@@ -9,18 +12,13 @@ h1 {
     margin-bottom:0px;
 }
 
-.headers {
-    position:absolute;
-    top:0px;
-}
-
-.pagecontent {
+div.pagecontent {
     position:absolute;
     top:120px;
-    width:70vw;
+    width:80%;
 }
 
-.navlink {
+a.navlink {
     color: black;
     text-decoration:none;
     display:inline-block;
@@ -28,10 +26,9 @@ h1 {
     margin-bottom:0px;
 }
 
-.navlinkicon {
-    margin:0;
-    display:none;
-    font-size:18pt;
-}
+    span.navlinkicon {
+        margin:0;
+        display:none;
+    }
 
-.navlink:hover .navlinkicon {display:inline-block}
+    a.navlink:hover .navlinkicon {display:inline-block}

@@ -8,15 +8,17 @@
     <body onresize="adjresumeheight()">
         <div class="headers">
             <h1>Isabella Gilbert</h1>
-            <!--<a class="navlink" href="about.html"><h2>About <span class="navlinkicon"> &#128172</span></h2></a>-->
-            <a class="navlink" href="index.html"><h2>Portfolio <span class="navlinkicon"> &#128194</span></h2></a>
-            <a class="navlink" href="resume.html"><h2>Resume <span class="navlinkicon"> &#128196</span></h2></a>
-            <a class="navlink" href="contact.html"><h2>Contact <span class="navlinkicon"> &#128233</span></h2></a>
+            <nav>
+                <!--<a class="navlink" href="about.html"><h2>About <span class="navlinkicon"> &#128172</span></h2></a>-->
+                <a class="navlink" href="index.html"><h2>Portfolio <span class="navlinkicon"> &#128194</span></h2></a>
+                <a class="navlink" href="resume.html"><h2>Resume <span class="navlinkicon"> &#128196</span></h2></a>
+                <a class="navlink" href="contact.html"><h2>Contact <span class="navlinkicon"> &#128233</span></h2></a>
+            </nav>
         </div>
         
         <div class="pagecontent" id="pagecontent">
             <hr>
-            <iframe id="resume" width="100%" src="https://docs.google.com/document/d/1FPZvmh70t95ebTcGDUpq5AIDRl6zkmuXOLSJCkN-dfY/edit?usp=sharing#zoom=fitH"></iframe>
+            <iframe id="resume" width="100%"style="min-height:90vh" src="https://docs.google.com/document/d/1FPZvmh70t95ebTcGDUpq5AIDRl6zkmuXOLSJCkN-dfY/edit?usp=sharing#zoom=fitH"></iframe>
             <script>
                 function adjresumeheight() {
                     var element = document.getElementById('pagecontent');
