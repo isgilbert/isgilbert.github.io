@@ -32,21 +32,29 @@
                     if (navigator.geolocation) {
                         navigator.geolocation.getCurrentPosition(getPosition,handleError);
                     } else {
-                        document.getElementById("weather").innerHTML = "Sharing location is not supported by your browser."
+                        document.getElementById("weather").innerHTML = "Geolocation is not supported by your browser."
                     }
                 }
                 function getPosition(position) {
-                    latitude = position.coords.latitude;
-                    longitude = position.coords.longitude;
+                    var latitude = position.coords.latitude;
+                    var longitude = position.coords.longitude;
                     getWeather(latitude,longitude);
                 }
                 function handleError(error) {
                     document.getElementById("weather").style.color = "red";
                     document.getElementById("weather").innerHTML = "Location not found!"
+                    document.getElementById("icon").src = "";
                 }
                 async function getWeather(latitude,longitude) {
                     const loc_response = await fetch('https://api.weather.gov/points/'+latitude+','+longitude);
                     const loc_json = await loc_response.json();
+
+                    if (!loc_response.ok) {
+                        document.getElementById("weather").style.color = "red";
+                        document.getElementById("weather").innerHTML = "Error fetching API data: "+loc_json.title;
+                        document.getElementById("icon").src = "";
+                        return;
+                    }
 
                     const city = loc_json.properties.relativeLocation.properties.city;
                     document.getElementById("city").innerHTML = " in "+city;
@@ -54,6 +62,13 @@
                     const forecast_url = loc_json.properties.forecastHourly;
                     const wea_response = await fetch(forecast_url);
                     const wea_json = await wea_response.json();
+
+                    if (!wea_response.ok) {
+                        document.getElementById("weather").style.color = "red";
+                        document.getElementById("weather").innerHTML = "Error fetching API data: "+wea_json.title;
+                        document.getElementById("icon").src = "";
+                        return;
+                    }
 
                     const weather = wea_json.properties.periods[0].shortForecast;
                     const temp = wea_json.properties.periods[0].temperature + "°" + wea_json.properties.periods[0].temperatureUnit;
