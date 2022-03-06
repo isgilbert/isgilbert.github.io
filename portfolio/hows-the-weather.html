@@ -41,45 +41,57 @@
                     getWeather(latitude,longitude);
                 }
                 function handleError(error) {
-                    document.getElementById("weather").style.color = "red";
-                    document.getElementById("weather").innerHTML = "Location not found!"
-                    document.getElementById("icon").src = "";
+                    let errorText = "Location not found!";
+                    clearAll();
+                    displayError(errorText);
                 }
                 async function getWeather(latitude,longitude) {
                     const loc_response = await fetch('https://api.weather.gov/points/'+latitude+','+longitude);
                     const loc_json = await loc_response.json();
 
                     if (!loc_response.ok) {
-                        document.getElementById("weather").style.color = "red";
-                        document.getElementById("weather").innerHTML = "Error fetching API data: "+loc_json.title;
-                        document.getElementById("icon").src = "";
+                        let errorText = "Error fetching API data: "+loc_json.title;
+                        clearAll();
+                        displayError(errorText);
                         return;
                     }
-
-                    const city = loc_json.properties.relativeLocation.properties.city;
-                    document.getElementById("city").innerHTML = " in "+city;
                     
                     const forecast_url = loc_json.properties.forecastHourly;
                     const wea_response = await fetch(forecast_url);
                     const wea_json = await wea_response.json();
 
                     if (!wea_response.ok) {
-                        document.getElementById("weather").style.color = "red";
-                        document.getElementById("weather").innerHTML = "Error fetching API data: "+wea_json.title;
-                        document.getElementById("icon").src = "";
+                        let errorText = "Error fetching API data: "+wea_json.title;
+                        clearAll();
+                        displayError(errorText);
                         return;
                     }
+
+                    const city = loc_json.properties.relativeLocation.properties.city;
+                    document.getElementById("city").innerHTML = " in "+city;
 
                     const weather = wea_json.properties.periods[0].shortForecast;
                     const temp = wea_json.properties.periods[0].temperature + "°" + wea_json.properties.periods[0].temperatureUnit;
                     document.getElementById("weather").style.color = "black";
                     document.getElementById("weather").innerHTML = "It is "+weather+", "+temp+".";
 
-                    const icon = wea_json.properties.periods[0].icon;
-                    document.getElementById("icon").src = icon;
+                    const icon_small = wea_json.properties.periods[0].icon;
+                    const icon_large = icon_small.replace("small","large");
+                    document.getElementById("icon").src = icon_large;
 
                     document.getElementById("api_info").style.visibility = "visible";
                     document.getElementById("api_link").href = forecast_url;
+                }
+                function clearAll() {
+                    document.getElementById("city").innerHTML = "";
+                    document.getElementById("weather").innerHTML = "";
+                    document.getElementById("api_info").style.visibility = "hidden";
+                    document.getElementById("api_link").removeAttribute("href");
+                    document.getElementById("icon").removeAttribute("src");
+                }
+                function displayError(errorText) {
+                    document.getElementById("weather").style.color = "red";
+                    document.getElementById("weather").innerHTML = errorText;
                 }
             </script>
             <br><br><br>
