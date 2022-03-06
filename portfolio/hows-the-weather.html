@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <meta charset="UTF-8">
+    <head>
+        <title>Isabella Gilbert | GitHub Portfolio - Snake</title>
+        <link rel="stylesheet" href="../css/style.css">
+    </head>
+    <body>
+        <div class="headers">
+            <h1>Isabella Gilbert</h1>
+            <nav>
+                <!--<a class="navlink" href="../about.html"><h2>About <span class="navlinkicon"> &#128172</span></h2></a>>-->
+                <a class="navlink" href="../index.html"><h2>Portfolio <span class="navlinkicon"> &#128194</span></h2></a>
+                <a class="navlink" href="../resume.html"><h2>Resume <span class="navlinkicon"> &#128196</span></h2></a>
+                <a class="navlink" href="../contact.html"><h2>Contact <span class="navlinkicon"> &#128233</span></h2></a>
+            </nav>
+        </div>
+
+        <div class="pagecontent">
+            <hr>
+            <h3>How's the Weather<span id='city'></span>?</h3>
+            <br>
+            Quick Weather.gov API exercise using JavaScript. 
+            <br><br>
+            <button onclick="getUserLocation()">Get the Weather!</button>
+            <br><br>
+            <span id="weather"></span>
+            <br><br>
+            <img id="icon">
+            <script>
+                function getUserLocation() {
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(getPosition,handleError);
+                    } else {
+                        document.getElementById("weather").innerHTML = "Sharing location is not supported by your browser."
+                    }
+                }
+                function getPosition(position) {
+                    latitude = position.coords.latitude;
+                    longitude = position.coords.longitude;
+                    getWeather(latitude,longitude);
+                }
+                function handleError(error) {
+                    document.getElementById("weather").style.color = "red";
+                    document.getElementById("weather").innerHTML = "Location not found!"
+                }
+                async function getWeather(latitude,longitude) {
+                    const loc_response = await fetch('https://api.weather.gov/points/'+latitude+','+longitude);
+                    const loc_json = await loc_response.json();
+
+                    const city = loc_json.properties.relativeLocation.properties.city;
+                    document.getElementById("city").innerHTML = " in "+city;
+                    
+                    const forecast_url = loc_json.properties.forecastHourly;
+                    const wea_response = await fetch(forecast_url);
+                    const wea_json = await wea_response.json();
+
+                    const weather = wea_json.properties.periods[0].shortForecast;
+                    const temp = wea_json.properties.periods[0].temperature + "°" + wea_json.properties.periods[0].temperatureUnit;
+                    document.getElementById("weather").style.color = "black";
+                    document.getElementById("weather").innerHTML = "It is "+weather+", "+temp+".";
+
+                    const icon = wea_json.properties.periods[0].icon;
+                    document.getElementById("icon").src = icon;
+
+                    document.getElementById("api_info").style.visibility = "visible";
+                    document.getElementById("api_link").href = forecast_url;
+                }
+            </script>
+            <br><br><br>
+            <span id="api_info" style="visibility:hidden;">See the weather API data <a id="api_link" target="_blank">here</a>.</span><br>
+            See the repository <a href="https://github.com/isgilbert/isgilbert.github.io/blob/main/portfolio/hows-the-weather.html" target="_blank">here</a>.
+        </div>
+    </body>
+</html>
